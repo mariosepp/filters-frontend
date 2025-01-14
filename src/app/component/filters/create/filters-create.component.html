@@ -1,0 +1,57 @@
+<div *ngIf="formOpen then openform else closedform"></div>
+
+<ng-template #closedform>
+  <button class="add-field" type="button" (click)="toggleFormOpen()">+ Create a new filter</button>
+</ng-template>
+
+<ng-template #openform>
+  <div class="container form">
+    <h4>Create a new filter</h4>
+    <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" formControlName="name">
+      </div>
+
+      <div formArrayName="criteria">
+        <div *ngFor="let criterion of getCriteriaFields().controls; let i = index">
+          <div [formGroupName]="i">
+            <table class="field">
+              <tbody>
+                <tr>
+                  <td>
+                    <label for="criterion">Criteria: </label>
+                  </td>
+                  <td>
+                    <select name="criterion" id="criterion" formControlName="criterion">
+                      <option value="" disabled>Select criterion</option>
+                      <option *ngFor="let criterionOption of criteriaOptions" [value]="criterionOption.toString()">{{criterionOption}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select name="comparator" id="comparator" formControlName="comparator">
+                      <option value="" disabled>Select criterion</option>
+                      <option *ngFor="let comparatorOption of comparatorOptions" [value]="comparatorOption">{{comparatorOption}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" id="condition" formControlName="condition" placeholder="Condition">
+                  </td>
+                  <td>
+                    <button class="remove-field" type="button" (click)="removeField(i)">-</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <button class="add-field" type="button" (click)="addField()">+ Add Criteria</button>
+      </div>
+
+      <div class="buttons">
+        <button type="button" class="close" (click)="toggleFormOpen()">Close</button>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
