@@ -65,7 +65,9 @@ export class FiltersCreateComponent {
     const filter: FilterItem = this.filterForm.getRawValue() as FilterItem;
     // TODO: add error handling
     this.filtersService.postFilter(filter)
-      .subscribe(createdFilter => this.onCreatedFilter.emit(createdFilter));
+      .subscribe(
+        createdFilter => this.onCreatedFilter.emit(createdFilter)
+      );
   }
 
   toggleFormOpen() {

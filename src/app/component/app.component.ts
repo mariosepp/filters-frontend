@@ -29,4 +29,8 @@ export class AppComponent {
   onCreatedFilterEvent(filter: FilterItem) {
     this.filters.push(filter);
   }
+
+  onErrorEvent(errorMessage: string) {
+    this.errorMessage = errorMessage;
+  }
 }
